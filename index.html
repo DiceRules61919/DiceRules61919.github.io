@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Offers</title>
+  <meta name="description" content="Pick an offer, finish the quick steps, and unlock your reward." />
+  <meta name="theme-color" content="#2f6f86" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Offers" />
+  <meta property="og:description" content="Pick an offer, finish the quick steps, and unlock your reward." />
+  <meta property="og:image" content="https://dicerules61919.github.io/og-image.png" />
+  <meta property="og:url" content="https://dicerules61919.github.io/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Offers" />
+  <meta name="twitter:description" content="Pick an offer, finish the quick steps, and unlock your reward." />
+  <meta name="twitter:image" content="https://dicerules61919.github.io/og-image.png" />
+  <style>
+    @font-face {
+      font-family: "Karla";
+      src: url("fonts/Karla.ttf") format("truetype");
+      font-weight: 200 900;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: "Karla";
+      src: url("fonts/Karla-Italic.ttf") format("truetype");
+      font-weight: 200 900;
+      font-style: italic;
+      font-display: block;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background: #2f6f86;
+      font-family: "Karla", "Noto Color Emoji", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: #111;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    .page {
+      position: relative;
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 30px 22px 28px 16px;
+      background:
+        radial-gradient(120% 80% at 50% 0%, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0) 55%),
+        linear-gradient(180deg, #3f7f94 0%, #36768b 48%, #2f6f86 100%);
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("noise.png");
+      background-size: 180px 180px;
+      opacity: 0.16;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      background: #0a0a0c;
+    }
+
+    .header {
+      margin-top: 18px;
+      font-weight: 700;
+      font-size: 23px;
+      line-height: 1.2;
+      color: #fff;
+      text-align: center;
+      letter-spacing: -0.02em;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.18);
+    }
+
+    .subheader {
+      margin-top: 8px;
+      max-width: 360px;
+      font-weight: 500;
+      font-size: 14.5px;
+      line-height: 1.35;
+      color: rgba(255,255,255,0.94);
+      text-align: center;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.16);
+    }
+
+    .offers {
+      width: 100%;
+      margin-top: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .offer {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      min-height: 92px;
+      padding: 8px 10px 8px 8px;
+      background: #efefef;
+      border: 3px solid #000;
+      border-radius: 12px;
+      box-shadow: 6px 8px 0 0 #000;
+      text-decoration: none;
+      color: #111;
+    }
+
+    .offer-popular {
+      margin-top: 8px;
+    }
+
+    .badge {
+      position: absolute;
+      top: -12px;
+      right: 10px;
+      background: #ffd400;
+      color: #111;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 3px 9px 2px;
+      border-radius: 999px;
+      border: 2px solid #000;
+      box-shadow: 2px 2px 0 #000;
+      line-height: 1.3;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .icon {
+      position: relative;
+      width: 72px;
+      height: 72px;
+      border-radius: 10px;
+      flex: 0 0 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow:
+        inset 0 1.25px 0 rgba(255,255,255,0.48),
+        inset 0 -2.5px 4px rgba(0,0,0,0.28),
+        0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    /* Glossy top highlight */
+    .icon::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 50%;
+      border-radius: 10px 10px 44% 44%;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.42) 0%,
+        rgba(255,255,255,0.12) 58%,
+        rgba(255,255,255,0) 100%
+      );
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Inner rim + bottom shadow */
+    .icon::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 10px;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.16),
+        inset 0 -7px 12px rgba(0,0,0,0.22);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .icon svg {
+      width: 48px;
+      height: 48px;
+      display: block;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 1.4px 1.1px rgba(0,0,0,0.32));
+    }
+
+    .icon-walk {
+      background: linear-gradient(155deg, #c4a0ff 0%, #8b5cf6 38%, #5b21b6 78%, #3b0764 100%);
+    }
+    .icon-play {
+      background: linear-gradient(155deg, #ffc07a 0%, #ff7a45 36%, #f43f5e 74%, #be123c 100%);
+    }
+    .icon-gift {
+      background: linear-gradient(155deg, #4a5d8a 0%, #24314f 42%, #12182a 78%, #05070c 100%);
+    }
+    .icon-cash {
+      background: linear-gradient(155deg, #86efac 0%, #22c55e 38%, #15803d 76%, #14532d 100%);
+    }
+
+    .copy {
+      flex: 1;
+      min-width: 0;
+      text-align: center;
+      padding: 0 8px 0 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .title {
+      display: block;
+      width: 100%;
+      font-weight: 700;
+      font-size: 17px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .subtitle {
+      display: block;
+      width: 100%;
+      margin-top: 4px;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 12.25px;
+      line-height: 1.28;
+      color: #1a1a1a;
+    }
+
+    .footer {
+      margin-top: 22px;
+      margin-right: 6px;
+      max-width: 360px;
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.72);
+      text-align: center;
+    }
+
+    .offer:active {
+      transform: translate(2px, 2px);
+      box-shadow: 4px 6px 0 0 #000;
+    }
+
+    @media (max-width: 400px) {
+      .page { padding: 24px 14px 24px 12px; }
+      .avatar { width: 148px; height: 148px; }
+      .header { font-size: 21px; }
+      .subheader { font-size: 13.5px; }
+      .icon { width: 64px; height: 64px; flex: 0 0 64px; }
+      .icon svg { width: 44px; height: 44px; }
+      .title { font-size: 15.5px; }
+      .subtitle { font-size: 11.5px; }
+      .offer { min-height: 86px; box-shadow: 5px 6px 0 0 #000; }
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute;overflow:hidden">
+    <defs>
+      <linearGradient id="gold-main" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffe9a8"/>
+        <stop offset="45%" stop-color="#f0c14b"/>
+        <stop offset="100%" stop-color="#c48414"/>
+      </linearGradient>
+      <linearGradient id="gold-hi" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#fff4cc"/>
+        <stop offset="100%" stop-color="#f3c34e"/>
+      </linearGradient>
+      <linearGradient id="gold-deep" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#e8b03a"/>
+        <stop offset="100%" stop-color="#a16207"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <div class="page">
+    <div class="content">
+      <img class="avatar" src="avatar-circle.png" width="170" height="170" alt="Profile" />
+      <h1 class="header">Hope everyone is doing great!</h1>
+      <p class="subheader">Pick an offer, finish the quick steps,<br>and unlock your reward ❤️</p>
+
+      <div class="offers">
+        <a class="offer offer-popular" href="https://installitnow.org/WSZq3e8f">
+          <span class="badge">Most popular</span>
+          <span class="icon icon-walk" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g fill="#fff">
+                <rect x="2.4" y="22.6" width="16.6" height="2.7" rx="1.35" opacity=".96"/>
+                <rect x="2.0" y="28.8" width="13.4" height="2.7" rx="1.35" opacity=".86"/>
+                <rect x="3.4" y="35.0" width="11.2" height="2.7" rx="1.35" opacity=".74"/>
+              </g>
+              <ellipse cx="40.5" cy="55.2" rx="16.2" ry="2.9" fill="#000" opacity=".22"/>
+              <g transform="rotate(-11 40 38)">
+                <!-- thick cup sole -->
+                <path fill="#fff" d="M17.8 42.3c-1.2.2-2.4 1.3-2.3 3.25.15 3.15 3.55 5.15 9.4 5.3l24.3-.5c5.2-.2 8.6-2.15 8.7-4.95.05-1.65-1.2-2.65-3.15-2.9L17.8 42.3Z"/>
+                <path fill="#4c1d95" opacity=".4" d="M24.6 48.4c.8.15 1.15-.5 1.1-1.1l-.2-1.05h-2.45l.15 1.15c.1.55.55.9 1.4 1Zm8.2-.1c.8.1 1.15-.5 1.05-1.1l-.2-1.15h-2.5l.15 1.2c.1.55.6.95 1.5 1.05Zm8.25-.2c.8.1 1.15-.5 1.05-1.1l-.2-1.15h-2.45l.15 1.2c.1.55.6.95 1.45 1.05Zm8-.3c.75.1 1.1-.5 1-1.1l-.2-1.2h-2.4l.15 1.25c.1.55.6.9 1.45 1.05Z"/>
+                <path d="M19.3 43.7h34.2" stroke="#4c1d95" stroke-width="1.2" stroke-linecap="round" opacity=".42"/>
+                <!-- flatter, elongated upper: vertical heel, sloped vamp, rounded toe -->
+                <path fill="#fff" d="M20.1 42.3
+                  L 19.85 29.6
+                  C 19.8 26.6 21.5 24.2 24.5 23.7
+                  C 25.7 23.5 26.6 24.3 26.9 25.5
+                  C 27.15 26.6 27.3 27.5 27.6 28.2
+                  C 29.8 26.1 33.4 25.2 37.1 27.3
+                  C 45.4 25.6 52.6 28.8 55.3 35.4
+                  C 56.4 38 55.6 41.2 53.2 42.35
+                  L 20.1 42.3 Z"/>
+                <!-- heel tab -->
+                <path fill="#fff" d="M22.3 24.6 C 22.05 21.6 24.3 19.9 26.85 20.7 C 26.3 22.5 26.1 24.3 26.2 26.1 C 24.5 25.4 23.1 25 22.3 24.6 Z"/>
+                <!-- ankle well, sitting in the collar not the center of a dome -->
+                <ellipse cx="32.6" cy="29.05" rx="5.7" ry="3.15" transform="rotate(-8 32.6 29.05)" fill="#2e0760"/>
+                <ellipse cx="32.9" cy="28.45" rx="4.15" ry="1.85" transform="rotate(-8 32.9 28.45)" fill="#1a0440" opacity=".55"/>
+                <!-- eyelets along the instep -->
+                <g fill="#4c1d95">
+                  <circle cx="37.15" cy="30.4" r="1.05"/>
+                  <circle cx="39.85" cy="32.15" r="1.05"/>
+                  <circle cx="42.5" cy="33.9" r="1.05"/>
+                  <circle cx="45.1" cy="35.65" r="1.05"/>
+                </g>
+                <path d="M37.15 30.4 45.1 35.65" stroke="#4c1d95" stroke-width="1.15" stroke-linecap="round" opacity=".7"/>
+                <path d="M51.3 33.2c1.45 1.7 2.1 3.55 1.95 5.55" stroke="#4c1d95" stroke-width="1.15" stroke-linecap="round" opacity=".5"/>
+              </g>
+            </svg>
+          </span>
+          <span class="copy">
+            <span class="title">Get Paid To Walk! 🚶</span>
+            <span class="subtitle">Sweatcoin app • Install + walk to earn coins</span>
+          </span>
+        </a>
+
+        <a class="offer" href="https://thedailyappwire.com/mJqzulRx">
+          <span class="icon icon-play" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="32" cy="51.5" rx="18" ry="3.2" fill="#000" opacity=".22"/>
+              <!-- gamepad body -->
+              <g transform="translate(0,2)">
+                <path fill="#000" opacity=".22" d="M12.8 27.4c-4.2.3-7.3 4.2-6.8 9.3.6 6.3 4.6 11 10.8 11.2l30.4.1c6.2-.1 10.3-4.9 10.9-11.2.5-5.1-2.5-9.1-6.8-9.4l-3.6-6.1c-1.1-1.8-3.3-2.8-5.5-2.6L22 18.9c-2.2-.1-4.5 1-5.6 2.8l-3.6 5.7Z" transform="translate(1.1,1.4)"/>
+                <path fill="#fff" fill-rule="evenodd" d="M22.2 18.6c-2.35-.15-4.7 1-5.9 2.95l-3.55 5.75c-4.35.4-7.45 4.35-6.95 9.55.6 6.55 4.85 11.35 11.2 11.55h29.9c6.4-.15 10.7-5.05 11.3-11.55.5-5.2-2.55-9.2-6.9-9.6l-3.55-5.7c-1.2-1.95-3.55-3.1-5.9-2.95L22.2 18.6Z
+                  M18.6 30.4c-.7 0-1.25.55-1.25 1.25v3.05h-3.05c-.7 0-1.25.55-1.25 1.25v1.7c0 .7.55 1.25 1.25 1.25h3.05v3.05c0 .7.55 1.25 1.25 1.25h1.7c.7 0 1.25-.55 1.25-1.25v-3.05h3.05c.7 0 1.25-.55 1.25-1.25v-1.7c0-.7-.55-1.25-1.25-1.25H21.55V31.65c0-.7-.55-1.25-1.25-1.25h-1.7Z
+                  M41.15 31.15a2.15 2.15 0 1 0 0 4.3 2.15 2.15 0 0 0 0-4.3ZM46.55 31.15a2.15 2.15 0 1 0 0 4.3 2.15 2.15 0 0 0 0-4.3ZM41.15 36.55a2.15 2.15 0 1 0 0 4.3 2.15 2.15 0 0 0 0-4.3ZM46.55 36.55a2.15 2.15 0 1 0 0 4.3 2.15 2.15 0 0 0 0-4.3ZM30.1 33.3a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3ZM35 33.3a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3Z"/>
+              </g>
+              <!-- reward coin, overlapping top-right -->
+              <g transform="translate(42.2,6.2)">
+                <circle cx="8.2" cy="9.4" r="8.6" fill="#000" opacity=".25"/>
+                <circle cx="7.3" cy="8.2" r="8.35" fill="url(#gold-deep)"/>
+                <circle cx="7.3" cy="8.2" r="8.35" fill="url(#gold-main)"/>
+                <circle cx="7.3" cy="8.2" r="6.55" fill="none" stroke="url(#gold-hi)" stroke-width="1.15"/>
+                <circle cx="7.3" cy="8.2" r="5.55" fill="none" stroke="#a16207" stroke-width=".4" opacity=".55"/>
+                <!-- 5-point star -->
+                <path fill="#7a4a08" d="M7.3 3.7l1.22 2.55 2.8.35-2.08 1.95.55 2.76L7.3 10.0l-2.49 1.31.55-2.76-2.08-1.95 2.8-.35Z"/>
+                <path fill="#fff8e0" d="M7.3 4.25l1.05 2.2 2.42.3-1.8 1.68.48 2.38-2.15-1.13-2.15 1.13.48-2.38-1.8-1.68 2.42-.3Z"/>
+              </g>
+            </svg>
+          </span>
+          <span class="copy">
+            <span class="title">Get Paid To Play Games! 🎮</span>
+            <span class="subtitle">Playful Rewards app • Earn by playing games</span>
+          </span>
+        </a>
+
+        <a class="offer" href="https://thedailyappwire.com/mJqzulRx">
+          <span class="icon icon-gift" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="32" cy="54.4" rx="17" ry="2.9" fill="#000" opacity=".28"/>
+              <rect x="8.7" y="27" width="48" height="26.8" rx="5" fill="#000" opacity=".28"/>
+              <rect x="7.3" y="24.1" width="49" height="27" rx="5.1" fill="url(#gold-deep)"/>
+              <rect x="7.3" y="24.1" width="49" height="27" rx="5.1" fill="url(#gold-main)"/>
+              <rect x="8.65" y="25.4" width="46.3" height="24" rx="4" fill="#fff"/>
+              <rect x="12.3" y="30.5" width="8.3" height="6.5" rx="1.05" fill="url(#gold-main)"/>
+              <path stroke="#a16207" stroke-width=".55" opacity=".55" d="M12.3 33.75h8.3M16.45 30.5v6.5"/>
+              <rect x="36.8" y="31.3" width="14" height="1.65" rx=".8" fill="#d6d3d1"/>
+              <rect x="39.5" y="34.85" width="11.3" height="1.65" rx=".8" fill="#e5e2df"/>
+              <rect x="37.7" y="38.4" width="13.1" height="1.65" rx=".8" fill="#d6d3d1"/>
+              <rect x="28.25" y="25.4" width="6" height="24" fill="url(#gold-main)"/>
+              <rect x="28.25" y="25.4" width="6" height="7.2" fill="url(#gold-hi)" opacity=".55"/>
+              <path fill="url(#gold-deep)" d="M31.2 22.2 21.3 32.4c-.5.52.05 1.3.72 1.08l9.18-2.58 9.18 2.58c.67.22 1.22-.56.72-1.08L31.2 22.2Z"/>
+              <path fill="url(#gold-main)" d="M31.2 21.6 22.4 30.8c-.45.46.05 1.12.66.94l8.14-2.22 8.14 2.22c.61.18 1.11-.48.66-.94L31.2 21.6Z"/>
+              <path fill="url(#gold-deep)" fill-rule="evenodd" d="M31.2 17.6 C 29.6 10.2 21.2 5.8 14.8 9.6 C 9.6 12.7 10.2 20.4 17.8 22.2 C 23.2 23.5 28.2 21.2 31.2 17.6 Z M 21.4 12.4 C 18.2 13.6 17.6 17.2 20.4 18.6 C 23.2 19.8 26.4 17.8 26.2 14.8 C 26.1 13.2 23.8 11.7 21.4 12.4 Z"/>
+              <path fill="url(#gold-main)" fill-rule="evenodd" d="M31.2 17.6 C 32.8 10.2 41.2 5.8 47.6 9.6 C 52.8 12.7 52.2 20.4 44.6 22.2 C 39.2 23.5 34.2 21.2 31.2 17.6 Z M 41 12.4 C 38.6 11.7 36.3 13.2 36.2 14.8 C 36 17.8 39.2 19.8 42 18.6 C 44.8 17.2 44.2 13.6 41 12.4 Z"/>
+              <path fill="url(#gold-main)" fill-rule="evenodd" d="M31.2 17.6 C 29.6 10.2 21.2 5.8 14.8 9.6 C 9.6 12.7 10.2 20.4 17.8 22.2 C 23.2 23.5 28.2 21.2 31.2 17.6 Z M 21.4 12.4 C 18.2 13.6 17.6 17.2 20.4 18.6 C 23.2 19.8 26.4 17.8 26.2 14.8 C 26.1 13.2 23.8 11.7 21.4 12.4 Z"/>
+              <path d="M18.4 11c2.5-1.8 6.2-1.9 8.4-.2" stroke="url(#gold-hi)" stroke-width="1.2" stroke-linecap="round" opacity=".85"/>
+              <path d="M37.6 10.8c2.3-1.7 6-.1 8.2 1.6" stroke="url(#gold-hi)" stroke-width="1.2" stroke-linecap="round" opacity=".85"/>
+              <rect x="27.5" y="16.3" width="7.4" height="6.4" rx="1.6" fill="url(#gold-deep)"/>
+              <rect x="27.85" y="16.6" width="6.7" height="5.6" rx="1.4" fill="url(#gold-main)"/>
+              <rect x="28.35" y="16.8" width="5.7" height="2.25" rx="1" fill="url(#gold-hi)" opacity=".85"/>
+            </svg>
+          </span>
+          <span class="copy">
+            <span class="title">Amazon Gift Card 🎁</span>
+            <span class="subtitle">Complete offers to earn Amazon gift cards</span>
+          </span>
+        </a>
+
+        <a class="offer" href="https://thedailyappwire.com/mJqzulRx">
+          <span class="icon icon-cash" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="32" cy="53.2" rx="18" ry="3.1" fill="#000" opacity=".25"/>
+              <!-- back bill -->
+              <g transform="rotate(-16 30 30) translate(-1,1)">
+                <rect x="11" y="18.5" width="36.5" height="22.2" rx="3" fill="#000" opacity=".22"/>
+                <rect x="10" y="17.2" width="36.5" height="22.2" rx="3" fill="#fff"/>
+                <rect x="12.3" y="19.4" width="31.9" height="17.8" rx="1.6" fill="none" stroke="#15803d" stroke-width="1.15" opacity=".55"/>
+                <circle cx="28.2" cy="28.3" r="4.6" fill="none" stroke="#15803d" stroke-width="1.15" opacity=".5"/>
+              </g>
+              <!-- front bill -->
+              <g transform="rotate(7 34 36) translate(3,6)">
+                <rect x="11.2" y="19.4" width="37.2" height="22.6" rx="3" fill="#000" opacity=".2"/>
+                <rect x="10" y="18" width="37.2" height="22.6" rx="3" fill="#fff"/>
+                <rect x="12.4" y="20.3" width="32.4" height="18" rx="1.6" fill="none" stroke="#15803d" stroke-width="1.15" opacity=".55"/>
+                <circle cx="19.2" cy="29.3" r="1.5" fill="#15803d" opacity=".45"/>
+                <circle cx="37.8" cy="29.3" r="1.5" fill="#15803d" opacity=".45"/>
+                <circle cx="28.6" cy="29.3" r="4.7" fill="none" stroke="#15803d" stroke-width="1.15" opacity=".5"/>
+              </g>
+              <!-- gold coin in front: classic coin engraving, not a brand mark -->
+              <g transform="translate(36.4,29.6)">
+                <circle cx="9.3" cy="11.1" r="11.1" fill="#000" opacity=".28"/>
+                <circle cx="8.2" cy="9.6" r="10.7" fill="url(#gold-deep)"/>
+                <circle cx="8.2" cy="9.6" r="10.7" fill="url(#gold-main)"/>
+                <circle cx="8.2" cy="9.6" r="8.55" fill="none" stroke="url(#gold-hi)" stroke-width="1.35"/>
+                <circle cx="8.2" cy="9.6" r="7.25" fill="none" stroke="#9a5b0a" stroke-width=".45" opacity=".55"/>
+                <!-- traditional serif-style dollar on a coin (S + single vertical bar) -->
+                <path d="M8.2 3.85v11.5" stroke="#6b3f08" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M8.2 4.05v11.1" stroke="#fff4c8" stroke-width="1.15" stroke-linecap="round"/>
+                <path d="M11.85 6.15c-.7-1.55-3.35-2.05-5.05-.7-1.55 1.2-1.45 3.05.55 4.05 1.95 1 2.35 2.2.85 3.45-1.45 1.2-3.7.85-4.5-.5" stroke="#6b3f08" stroke-width="2.05" stroke-linecap="round" fill="none"/>
+                <path d="M11.85 6.15c-.7-1.55-3.35-2.05-5.05-.7-1.55 1.2-1.45 3.05.55 4.05 1.95 1 2.35 2.2.85 3.45-1.45 1.2-3.7.85-4.5-.5" stroke="#fff4c8" stroke-width="1.35" stroke-linecap="round" fill="none"/>
+              </g>
+            </svg>
+          </span>
+          <span class="copy">
+            <span class="title">Cash App 💵</span>
+            <span class="subtitle">Finish a few steps to earn Cash App cash</span>
+          </span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
